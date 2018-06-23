@@ -12,19 +12,24 @@ package statepattern;
 public class Drinks {
 int price;
 String name=new String("");
-void setDrink(String name)
+Drinks(String Name)
 {
-this.name=name;
+name=Name;
 }
 void setPrice(){
-if(name.equalsIgnoreCase("pepsi")){
+if(name.equals("Pepsi")){
 price=15;
 }
-else if(name.equalsIgnoreCase("fanta")){
+else if(name.equals("Fanta")){
 price=16;
 }
-else if(name.equalsIgnoreCase("7up")){
+else if(name.equals("7up")){
 price=17;
+}
+else
+{
+System.out.println("Not available");
+price=99999099;
 }
 }
 int getPrice()

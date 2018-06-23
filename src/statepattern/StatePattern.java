@@ -20,40 +20,63 @@ public class StatePattern {
     public static void main(String[] args) {
         // TODO code application logic here
         VendingMachine vendingMachine=new VendingMachine();
+        int change;
+        int Money;
         int totalDrinks=100;
+       String name;
         boolean availability=true;
-        boolean change=true;
-        boolean currency=true;
+        //boolean change=true;
+        //boolean currency=true;
         Scanner sc=new Scanner(System.in);
+        while(true)
+        {
         System.out.println("Choose your drink : ");
-        String drinks=sc.nextLine();
-        System.out.println("Insert coin : ");
-        String coin=sc.nextLine();
+        name=sc.nextLine();
+        System.out.println("Insert Money : ");
+        Money= sc.nextInt();
         
-        if(availability && change)
+        Drinks drinks=new Drinks(name);
+        drinks.setPrice();
+        if(drinks.getPrice() <=  Money)
         {
-          Deliver_Change state=new Deliver_Change();  
+        change=Money-drinks.getPrice();    
+        if((availability) && change>0)
+        { 
+          totalDrinks--;
+          Deliver_Change state=new Deliver_Change();
           vendingMachine.setState(state);
           System.out.println(vendingMachine.getState().toString());
+          System.out.println(drinks.name+"was delivered with change : "+change);
         }
-         if((availability) && !(change))
+         if((availability)&&change==0)
         {
-          Deliver_Nochange state=new Deliver_Nochange();  
+            totalDrinks--;
+            Deliver_Nochange state=new Deliver_Nochange();  
           vendingMachine.setState(state);
           System.out.println(vendingMachine.getState().toString());
+        System.out.println(drinks.name+"was delivered with no change .");
         } 
-         if(!(availability) && !(currency))
+        
+        }
+        else
         {
           NoDelivery_currency state=new NoDelivery_currency();  
           vendingMachine.setState(state);
           System.out.println(vendingMachine.getState().toString());
+          System.out.println(drinks.name+"was not delivered due to insufficient amount of money .");
+        break;
         }
-          if(!(availability) && (currency))
+          if(!(availability))
         {
           NoDelivery_inventory state=new NoDelivery_inventory();  
           vendingMachine.setState(state);
           System.out.println(vendingMachine.getState().toString());
-        }
+        System.out.println(drinks.name+"was not delivered due to insufficient inventory .");
+        break;
+         }
+         if(totalDrinks<=0)
+             availability=false;
     }
     
+}
 }
