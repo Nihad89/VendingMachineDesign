@@ -20,12 +20,16 @@ public class StatePattern {
     public static void main(String[] args) {
         // TODO code application logic here
         VendingMachine vendingMachine=new VendingMachine();
+        int totalDrinks=100;
         boolean availability=true;
         boolean change=true;
         boolean currency=true;
         Scanner sc=new Scanner(System.in);
+        System.out.println("Choose your drink : ");
         String drinks=sc.nextLine();
+        System.out.println("Insert coin : ");
         String coin=sc.nextLine();
+        
         if(availability && change)
         {
           Deliver_Change state=new Deliver_Change();  
